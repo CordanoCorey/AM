@@ -1,0 +1,18 @@
+export class NotesActions {
+    static DELETE = '[Notes] Delete Notes';
+    static GET = '[Notes] Get Notes';
+    static POST = '[Notes] Post Notes';
+    static PUT = '[Notes] Put Notes';
+}
+
+export function notesReducer(state: Notes = new Notes(), action: Action): Notes {
+    switch (action.type) {
+
+        default:
+            return state;
+    }
+}
+
+export function notesSelector(store: Store<any>): Observable<Notes> {
+    return store.select('notes');
+}

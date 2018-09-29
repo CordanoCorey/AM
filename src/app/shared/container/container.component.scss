@@ -1,0 +1,17 @@
+@import '~@angular/material/_theming';
+@import '../../../common';
+#container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  float: right;
+  .content {
+    width: 90%;
+    max-width: 100%;
+    min-width: 720px;
+    position: relative;
+    padding: 24px 5% 60px 5%;
+    display: flex;
+  }
+}
