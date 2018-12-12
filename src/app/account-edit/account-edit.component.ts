@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SmartComponent, build, HttpActions } from '@caiu/library';
+import { SmartComponent, build, HttpActions, truthy } from '@caiu/library';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -104,7 +104,11 @@ export class AccountEditComponent extends SmartComponent implements OnInit {
   submit(e: any) {
     this.markAsSubmitted();
     if (this.isValid) {
-      this.accountId ? this.updateAccount(this.currentValue) : this.addAccount(this.currentValue);
+      if (truthy(this.accountId)) {
+        this.updateAccount(this.currentValue);
+      } else {
+        this.addAccount(this.currentValue);
+      }
     }
   }
 

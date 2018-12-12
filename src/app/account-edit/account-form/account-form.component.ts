@@ -34,7 +34,7 @@ export class AccountFormComponent extends FormComponent {
 
   onSubmit(e: any) {
     if (this.editing) {
-      this.add.emit(this.valueOut)
+      this.add.emit(this.valueOut);
     } else {
       this.update.emit(this.valueOut);
     }

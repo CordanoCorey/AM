@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SmartComponent, HttpActions } from '@caiu/library';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -6,7 +6,6 @@ import { Observable, Subscription } from 'rxjs';
 import { Account } from '../accounts/accounts.model';
 import { AccountActions, accountSelector } from '../accounts/accounts.reducer';
 import { TabsActions } from '../shared/actions';
-import { Files } from '../shared/models';
 
 @Component({
   selector: 'am-account',
@@ -15,34 +14,27 @@ import { Files } from '../shared/models';
 })
 export class AccountComponent extends SmartComponent implements OnInit {
 
-  @ViewChild('logo') logo;
+  account: Account = new Account();
   account$: Observable<Account>;
-  accountId = 0;
-  accountUrl = '';
-  description = '';
   routeName = 'account-detail';
-  src = '';
 
   constructor(public store: Store<any>) {
     super(store);
     this.account$ = accountSelector(this.store);
   }
 
+  get accountId(): number {
+    return this.account.id;
+  }
+
   get accountChanges(): Subscription {
     return this.account$.subscribe(account => {
-      this.accountId = account.id;
-      this.accountUrl = account.url;
-      this.description = account.description;
-      this.src = Files.FileToBinary(account.logo);
+      this.account = account;
     });
   }
 
-  get tabsOrder(): string[] {
-    return ['dashboard', 'meetings', 'search'];
-  }
-
   ngOnInit() {
-    this.dispatch(TabsActions.activate('dashboard', this.tabsOrder));
+    this.dispatch(TabsActions.activate('dashboard', ['dashboard', 'meetings', 'search']));
     this.subscribe([this.accountChanges]);
   }
 

@@ -1,15 +1,17 @@
 import { Collection, Metadata, toInt, build, Dictionary, Action } from '@caiu/library';
 
 import { GroupMember } from '../groups/groups.model';
-import { User, File } from '../shared/models';
+import { User, File, Files } from '../shared/models';
 
 export class Account {
     id = 0;
+    administrator: User = new User();
     allowRequests?= false;
     defaultSignature = '';
     description?= '';
     emailAgendaTemplate = '';
     emailTemplate = '';
+    logo: File = new File();
     memberContentSourceId = '';
     name = '';
     ownerId = 0;
@@ -20,8 +22,10 @@ export class Account {
     trialPeriodEndDate: Date = new Date();
     url = '';
 
-    administrator?: User = new User();
-    logo?: File = new File();
+    get src(): string {
+        return Files.FileToBinary(this.logo);
+    }
+
 }
 
 export class Accounts extends Collection<Account> {
